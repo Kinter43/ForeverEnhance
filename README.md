@@ -8,6 +8,32 @@ head/leg/shoulder enhancements. Its catalog contains 190 options, including
 Forever's Forceful/Mystic kits, necklace enchants, held-offhand enchants, and
 updated oil effects.
 
+## Screenshots
+
+### Gear Recommendations
+
+Forever Enhance reviews equipped gear and recommends compatible permanent and temporary enhancements.
+
+![Forever Enhance main gear recommendations panel](images/Main-Panel.png)
+
+### Recommendation Details
+
+Select a gear row to view the recommended enhancement, benefits, source, materials, and alternative options.
+
+![Forever Enhance recommendation details](images/Recommendation-Details.png)
+
+### Shopping List
+
+Generate a copyable list of recommended upgrades and required materials.
+
+![Forever Enhance shopping list](images/Shopping-List.png)
+
+### Equipment Tooltip
+
+View a quick enhancement recommendation directly in the equipment tooltip.
+
+![Forever Enhance equipment tooltip recommendation](images/Equipment-Tooltip.png)
+
 ## Package layout
 
 The game loads only the six Lua files listed in `ForeverEnhance.toc`. The `dev`
