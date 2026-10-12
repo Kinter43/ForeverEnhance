@@ -9,9 +9,13 @@ local function text(parent,font,size)
     return f
 end
 local function background(frame)
-    frame:SetBackdrop({bgFile="Interface\\Buttons\\WHITE8X8",edgeFile="Interface\\Buttons\\WHITE8X8",edgeSize=1})
-    frame:SetBackdropColor(0.065,0.075,0.1,0.98)
-    frame:SetBackdropBorderColor(0.22,0.3,0.4,1)
+    -- Use Blizzard's dialog artwork so Forever Enhance feels native to the default UI.
+    frame:SetBackdrop({
+        bgFile="Interface\\DialogFrame\\UI-DialogBox-Background",
+        edgeFile="Interface\\DialogFrame\\UI-DialogBox-Border",
+        tile=true,tileSize=32,edgeSize=32,
+        insets={left=8,right=8,top=8,bottom=8},
+    })
 end
 local function button(parent,label,width,action)
     local b=CreateFrame("Button",nil,parent,"UIPanelButtonTemplate")
@@ -155,6 +159,40 @@ function UI.Refresh()
     UI.empty:SetShown(#rows==0)
     if #rows==0 then UI.empty:SetText(context.missingOnly and "No missing or known upgrade options in this view. Switch to All gear to review current enhancements." or "Equip some gear, then click Refresh.") end
     UI.summary:SetText(FE.dirty and "In combat: recommendations will refresh when combat ends." or missing.." missing enhancements  |  "..review.." to review  |  Data: "..FE.dataDate)
+end
+
+
+function UI.CreateMinimapButton()
+    if UI.minimapButton or not Minimap then return UI.minimapButton end
+    local b=CreateFrame("Button","ForeverEnhanceMinimapButton",Minimap)
+    UI.minimapButton=b
+    b:SetSize(31,31);b:SetFrameStrata("MEDIUM");b:SetFrameLevel(8)
+    b:RegisterForClicks("LeftButtonUp","RightButtonUp");b:RegisterForDrag("LeftButton")
+    local border=b:CreateTexture(nil,"OVERLAY");border:SetTexture("Interface\\Minimap\\MiniMap-TrackingBorder");border:SetSize(52,52);border:SetPoint("TOPLEFT")
+    local bg=b:CreateTexture(nil,"BACKGROUND");bg:SetTexture("Interface\\Minimap\\UI-Minimap-Background");bg:SetSize(24,24);bg:SetPoint("CENTER",0,1)
+    local icon=b:CreateTexture(nil,"ARTWORK");icon:SetTexture("Interface\\Icons\\INV_Enchant_EssenceEternalLarge");icon:SetSize(20,20);icon:SetPoint("CENTER",0,1);icon:SetTexCoord(0.08,0.92,0.08,0.92)
+    local highlight=b:CreateTexture(nil,"HIGHLIGHT");highlight:SetTexture("Interface\\Minimap\\UI-Minimap-ZoomButton-Highlight");highlight:SetBlendMode("ADD");highlight:SetAllPoints()
+    local function place(angle)
+        angle=angle or 220
+        ForeverEnhanceDB.minimapAngle=angle
+        local r=80;local rad=math.rad(angle)
+        b:ClearAllPoints();b:SetPoint("CENTER",Minimap,"CENTER",math.cos(rad)*r,math.sin(rad)*r)
+    end
+    local function updatePosition()
+        local mx,my=Minimap:GetCenter();local x,y=GetCursorPosition();local scale=Minimap:GetEffectiveScale()
+        x,y=x/scale,y/scale
+        place(math.deg(math.atan2(y-my,x-mx)))
+    end
+    b:SetScript("OnDragStart",function(self) self:SetScript("OnUpdate",updatePosition) end)
+    b:SetScript("OnDragStop",function(self) self:SetScript("OnUpdate",nil);updatePosition() end)
+    b:SetScript("OnClick",function() UI.Toggle() end)
+    b:SetScript("OnEnter",function(self)
+        GameTooltip:SetOwner(self,"ANCHOR_LEFT");GameTooltip:SetText("Forever Enhance",1,0.82,0)
+        GameTooltip:AddLine("Click to open gear recommendations.",1,1,1,true);GameTooltip:AddLine("Drag to move this button.",0.7,0.7,0.7,true);GameTooltip:Show()
+    end)
+    b:SetScript("OnLeave",function() GameTooltip:Hide() end)
+    place(ForeverEnhanceDB.minimapAngle or 220)
+    return b
 end
 
 function UI.Toggle()

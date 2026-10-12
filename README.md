@@ -1,38 +1,12 @@
 # Forever Enhance
 
-Version 1.0.1 — WoW Forever, interface 16001. Open with **`/fe`**.
+Version 1.1.0 — WoW Forever, interface 16001. Open with **`/fe`**.
 
 Forever Enhance checks your equipped gear and recommends permanent enchants,
 armor kits, weapon oils, sharpening stones, weightstones, scopes, and selected
 head/leg/shoulder enhancements. Its catalog contains 190 options, including
 Forever's Forceful/Mystic kits, necklace enchants, held-offhand enchants, and
 updated oil effects.
-
-## Screenshots
-
-### Gear Recommendations
-
-Forever Enhance reviews equipped gear and recommends compatible permanent and temporary enhancements.
-
-![Forever Enhance main gear recommendations panel](images/Main-Panel.png)
-
-### Recommendation Details
-
-Select a gear row to view the recommended enhancement, benefits, source, materials, and alternative options.
-
-![Forever Enhance recommendation details](images/Recommendation-Details.png)
-
-### Shopping List
-
-Generate a copyable list of recommended upgrades and required materials.
-
-![Forever Enhance shopping list](images/Shopping-List.png)
-
-### Equipment Tooltip
-
-View a quick enhancement recommendation directly in the equipment tooltip.
-
-![Forever Enhance equipment tooltip recommendation](images/Equipment-Tooltip.png)
 
 ## Package layout
 

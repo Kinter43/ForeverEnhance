@@ -83,8 +83,11 @@ local function addGearTooltip(tooltip)
             ranked=FE.Engine.Rank(gear,FE.context,"temporary")
             if ranked[1] then entries[#entries+1]="Oil / stone: "..ranked[1].entry.name end
             if #entries>0 then
-                tooltip:AddLine(" ");tooltip:AddLine("Forever Enhance",0.6,0.83,1)
+                local divider="--------------------------------"
+                tooltip:AddLine(" ");tooltip:AddLine(divider,0.35,0.35,0.35)
+                tooltip:AddLine("Forever Enhance",1,0.82,0)
                 for _, line in ipairs(entries) do tooltip:AddLine(line,1,0.87,0.55,true) end
+                tooltip:AddLine(divider,0.35,0.35,0.35)
                 tooltip:AddLine("/fe for details and current enhancement status",0.72,0.76,0.82,true)
             end
             return
@@ -163,7 +166,7 @@ SlashCmdList.FOREVERENHANCE=FE.Slash
 events:SetScript("OnEvent",function(_,event,arg)
     if event=="ADDON_LOADED" then if arg==addonName then FE.Initialize() end;return end
     if not initialized then FE.Initialize() end
-    if event=="PLAYER_LOGIN" then installHooks();scheduleRefresh();FE.Print("Ready. Type /fe to check your gear.")
+    if event=="PLAYER_LOGIN" then installHooks();FE.UI.CreateMinimapButton();scheduleRefresh();FE.Print("Ready. Type /fe or click the minimap button to check your gear.")
     elseif event=="UNIT_INVENTORY_CHANGED" and arg~="player" then return
     else scheduleRefresh() end
 end)

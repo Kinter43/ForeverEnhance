@@ -1,6 +1,6 @@
 local addonName, FE = ...
 FE.name = addonName
-FE.version = "1.0.1"
+FE.version = "1.1.0"
 FE.dataBuild = "1.60.1.70338"
 FE.dataDate = "2026-10-11"
 
